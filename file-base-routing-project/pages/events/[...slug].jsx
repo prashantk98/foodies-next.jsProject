@@ -5,8 +5,9 @@ import Button from "../../components/ui/button";
 import ErrorAlert from "../../components/ui/error-alert";
 import { getFilteredEvents } from "../../helper/api-util";
 // import { getFilteredEvents } from "../../dummy-data";
-import useSwr from 'swr';
+import useSwr from "swr";
 import { useEffect, useState } from "react";
+import Head from "next/head";
 
 const FilteredEventPage = () => {
   const router = useRouter();
@@ -28,24 +29,49 @@ const FilteredEventPage = () => {
       setLoadedEvents(events);
     }
   }, [data]);
+  let pageHeadData = (
+    <Head>
+      <title>Filtered Events</title>
+      <meta
+        name="description"
+        content={`A list of filtered data.`}
+      />
+    </Head>
+  );
   if (!loadedEvents) {
-    return <p className="center">Loading...</p>;
+    return (
+      <>
+        {pageHeadData}
+        <p className="center">Loading...</p>;
+      </>
+    );
   }
   const filterYear = filterData[0];
   const filterMonth = filterData[1];
   const numYear = +filterYear;
   const numMonth = +filterMonth;
-  
+  pageHeadData = (
+    <Head>
+      <title>Filtered Events</title>
+      <meta
+        name="description"
+        content={`All events for ${numMonth}/${numYear}.`}
+      />
+    </Head>
+  );
+
   if (
     isNaN(numYear) ||
     isNaN(numMonth) ||
     numYear > 2023 ||
     numYear < 2021 ||
     numMonth < 1 ||
-    numMonth > 12||error
+    numMonth > 12 ||
+    error
   ) {
     return (
       <>
+        {pageHeadData}
         <ErrorAlert>
           <p>Invalid filter, Please adjust you value</p>
         </ErrorAlert>
@@ -66,6 +92,7 @@ const FilteredEventPage = () => {
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <>
+        {pageHeadData}
         <ErrorAlert>
           <p>No events found for the chosen filter!</p>
         </ErrorAlert>
@@ -78,6 +105,7 @@ const FilteredEventPage = () => {
   const date = new Date(numYear, numMonth - 1);
   return (
     <>
+      {pageHeadData}
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </>
@@ -105,7 +133,7 @@ export default FilteredEventPage;
 //       {
 //         props: {
 //           hasError: true
-//         } 
+//         }
 //       }
 //     );
 //   }
