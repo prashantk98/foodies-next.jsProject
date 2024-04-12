@@ -1,7 +1,13 @@
-const Home = () => {
+import FeaturedPosts from "../components/home-page/featured-posts";
+import Hero from "../components/home-page/hero";
+
+const HomePage = () => {
   return (
-    <div>Home</div>
+    <>
+      <Hero/>
+      <FeaturedPosts/>
+    </>
   )
 }
 
-export default Home
+export default HomePage;
