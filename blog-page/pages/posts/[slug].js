@@ -1,9 +1,10 @@
-import React from 'react'
+import PostContent from '../../components/posts/post-detail/post-content';
 
-const PostIdPage = () => {
+const PostDetailPage = () => {
   return (
-    <div>PostIdPage</div>
-  )
+    <>
+      <PostContent/>
+    </>
+  );
 }
-
-export default PostIdPage
+export default PostDetailPage;
